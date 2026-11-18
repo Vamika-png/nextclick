@@ -251,6 +251,158 @@ footer a { text-decoration: none; }
 footer a:hover { color: var(--navy); }
 .big-word { font-family: var(--serif); font-style: italic; font-size: clamp(64px, 14vw, 190px); line-height: 0.9; letter-spacing: -0.03em; color: var(--navy); text-align: center; margin-top: 110px; opacity: 0.95; }
 .big-word span { color: var(--coral); }
+
+/* ---------- motion ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(26px); filter: blur(4px); } }
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes bob { 50% { translate: 0 -9px; } }
+.rise { animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: var(--d, 0s); }
+.hero h1 .line { display: block; }
+.js-anim .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); transition-delay: var(--i, 0s); }
+.js-anim .reveal.in { opacity: 1; transform: none; }
+@media (min-width: 1181px) {
+  .note { animation: bob 6s ease-in-out infinite; }
+  .n2 { animation-delay: -1.5s; } .n3 { animation-delay: -3s; } .n4 { animation-delay: -4.5s; }
+}
+
+/* nav buttons */
+.nav-cta { display: flex; gap: 8px; align-items: center; }
+@media (max-width: 560px) { .nav-cta .pill-light { display: none; } }
+.cta .pill svg { margin-left: -4px; }
+.dl-arch { white-space: nowrap; }
+
+/* hero demo loop: cursor goes to the framed button, clicks, the step is checked */
+.mock-cursor { position: absolute; z-index: 6; width: 3.4cqw; height: 3.4cqw; left: 30%; top: 86%; animation: heroCursor 9s cubic-bezier(0.45, 0, 0.2, 1) infinite; filter: drop-shadow(0 0.4cqw 0.6cqw rgb(20 33 61 / 0.35)); }
+@keyframes heroCursor {
+  0%, 12% { left: 30%; top: 86%; transform: scale(1); }
+  38% { left: 87%; top: 10%; transform: scale(1); }
+  41% { left: 87%; top: 10%; transform: scale(0.82); }
+  44%, 86% { left: 87%; top: 10%; transform: scale(1); }
+  100% { left: 30%; top: 86%; }
+}
+.mock-ripple { position: absolute; z-index: 5; left: 87%; top: 10%; width: 8cqw; height: 8cqw; margin: -4cqw 0 0 -4cqw; border-radius: 50%; border: 0.35cqw solid var(--coral); opacity: 0; animation: heroRipple 9s ease-out infinite; }
+@keyframes heroRipple { 0%, 40% { opacity: 0; transform: scale(0.2); } 42% { opacity: 0.9; } 54%, 100% { opacity: 0; transform: scale(1.4); } }
+.hero .nc-card.a { animation: cardA 9s ease infinite; }
+.hero .nc-card.b { animation: cardB 9s ease infinite; }
+@keyframes cardA { 0%, 43% { opacity: 1; transform: none; } 47%, 90% { opacity: 0; transform: translateY(-1cqw); } 96%, 100% { opacity: 1; transform: none; } }
+@keyframes cardB { 0%, 44% { opacity: 0; transform: translateY(1.2cqw); } 49%, 88% { opacity: 1; transform: none; } 93%, 100% { opacity: 0; } }
+.hero .mock-btn.target { animation: ring 1.8s ease-in-out infinite, targetDone 9s ease infinite; }
+@keyframes targetDone { 0%, 44% { outline-color: var(--coral); } 48%, 88% { outline-color: #2e6b45; } 92%, 100% { outline-color: var(--coral); } }
+.hero .mock-sites .first { position: relative; }
+.hero .mock-sites .first .live { position: absolute; inset: -1px; animation: siteLive 9s ease infinite; }
+@keyframes siteLive { 0%, 46% { opacity: 0; } 52%, 88% { opacity: 1; } 93%, 100% { opacity: 0; } }
+
+/* tools marquee */
+.marquee { margin-top: 70px; display: flex; align-items: center; gap: 24px; }
+.marquee .viewport { flex: 1; min-width: 0; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee .label { flex: none; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--navy-soft); }
+.marquee .track { display: flex; gap: 10px; width: max-content; animation: marquee 48s linear infinite; }
+.marquee:hover .track { animation-play-state: paused; }
+.marquee .track span { white-space: nowrap; font-size: 14px; padding: 8px 16px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line-2); color: var(--navy-2); }
+.marquee .track span:nth-child(5n+2) { border-color: rgb(255 107 87 / 0.35); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@media (max-width: 640px) { .marquee .label { display: none; } }
+
+/* how it works: animated walkthrough */
+.how-grid { display: grid; gap: 28px; margin-top: 56px; align-items: start; }
+@media (min-width: 980px) { .how-grid { grid-template-columns: 0.82fr 1.18fr; gap: 40px; } }
+.how-steps { display: grid; gap: 10px; }
+.how-step { all: unset; box-sizing: border-box; display: grid; grid-template-columns: 44px 1fr; gap: 4px 14px; padding: 18px 20px 20px; border-radius: 20px; cursor: pointer; border: 1px solid transparent; transition: background-color 200ms, border-color 200ms; }
+.how-step:hover { background: rgb(255 252 246 / 0.6); }
+.how-step:focus-visible { outline: 2px solid var(--coral); outline-offset: 2px; }
+.how-step .n { grid-row: span 3; font-family: var(--serif); font-style: italic; font-size: 34px; line-height: 1; color: var(--navy-soft); opacity: 0.55; transition: color 200ms, opacity 200ms; }
+.how-step .t { display: block; font: 600 17px/1.3 var(--sans); }
+.how-step .p { display: block; font-size: 14.5px; color: var(--navy-soft); max-height: 0; overflow: hidden; opacity: 0; transition: max-height 400ms ease, opacity 300ms ease, margin 300ms; }
+.how-step .bar { display: block; height: 3px; border-radius: 3px; background: var(--line-2); margin-top: 0; overflow: hidden; opacity: 0; transition: opacity 200ms; }
+.how-step .bar i { display: block; height: 100%; width: 0; background: var(--coral); border-radius: 3px; }
+.how-step.active { background: var(--paper); border-color: var(--line); box-shadow: 0 18px 36px -24px rgb(20 33 61 / 0.4); }
+.how-step.active .n { color: var(--coral); opacity: 1; }
+.how-step.active .p { max-height: 140px; opacity: 1; margin-top: 4px; }
+.how-step.active .bar { opacity: 1; margin-top: 12px; }
+.how-step.active .bar i { animation: fill var(--dur, 9s) linear forwards; }
+.how-grid:hover .how-step.active .bar i { animation-play-state: paused; }
+@keyframes fill { to { width: 100%; } }
+.how-screen { position: sticky; top: 24px; }
+.how-screen .mock-body { aspect-ratio: 16 / 11; padding: 0; background: var(--cream); }
+.scene { position: absolute; inset: 0; padding: 5cqw 6cqw; display: none; }
+.scene.play { display: block; animation: fadeIn 0.4s ease both; }
+.scene .s-brand { display: flex; align-items: center; gap: 1cqw; font: 600 1.9cqw/1 var(--sans); color: var(--navy); }
+.scene .s-brand svg { width: 2.6cqw; height: 2.6cqw; }
+.scene .s-h { font: 400 5.4cqw/1.05 var(--serif); letter-spacing: -0.02em; color: var(--navy); margin-top: 3.4cqw; }
+.scene .s-sub { font: 400 1.9cqw/1.4 var(--sans); color: var(--navy-soft); margin-top: 1.2cqw; }
+.scene .s-input { margin-top: 3cqw; padding: 2cqw 2.2cqw; border-radius: 2cqw; background: var(--paper); border: 1px solid var(--line); box-shadow: 0 1.6cqw 3cqw -2cqw rgb(20 33 61 / 0.35); }
+.scene .s-input .typed { font: 400 2.3cqw/1.45 var(--sans); color: var(--navy); min-height: 6.6cqw; display: block; }
+.scene .s-input .caret { display: inline-block; width: 0.25cqw; height: 2.6cqw; background: var(--coral); vertical-align: -0.4cqw; margin-left: 0.2cqw; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.scene .s-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.4cqw; font: 400 1.6cqw/1 var(--sans); color: #9a9fae; }
+.scene .s-btn { display: inline-flex; align-items: center; gap: 0.8cqw; font: 600 1.8cqw/1 var(--sans); padding: 1.3cqw 2.4cqw; border-radius: 99px; background: var(--navy); color: var(--cream); }
+.scene .s-btn.go-pulse { animation: press 0.5s ease both; animation-delay: var(--d, 0s); }
+@keyframes press { 50% { transform: scale(0.94); box-shadow: 0 0 0 1.2cqw rgb(255 107 87 / 0.25); } }
+.scene .ideas { display: flex; gap: 1cqw; flex-wrap: wrap; margin-top: 2.2cqw; }
+.scene .ideas span { font: 400 1.55cqw/1 var(--sans); padding: 1cqw 1.6cqw; border-radius: 99px; border: 1px solid var(--line); background: var(--paper); color: var(--navy-2); }
+.scene .q { margin-top: 2.6cqw; padding: 2.2cqw 2.6cqw; border-radius: 2cqw; background: var(--paper); border: 1px solid var(--line); animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: var(--d, 0s); }
+.scene .q b { font: 600 2.05cqw/1.3 var(--sans); color: var(--navy); }
+.scene .chips { display: flex; flex-wrap: wrap; gap: 1cqw; margin-top: 1.6cqw; }
+.scene .chips span { font: 400 1.65cqw/1 var(--sans); padding: 1.1cqw 1.8cqw; border-radius: 99px; border: 1px solid var(--line); color: var(--navy-2); background: #fff; }
+.scene .chips span.pick { animation: pick 0.45s ease forwards; animation-delay: var(--d, 0s); }
+@keyframes pick { to { background: var(--navy); color: var(--cream); border-color: var(--navy); } }
+.scene .plan { margin-top: 2.6cqw; display: grid; gap: 1.2cqw; }
+.scene .plan div { display: grid; grid-template-columns: 3.6cqw 1fr auto; align-items: center; gap: 1.6cqw; padding: 1.5cqw 2cqw; border-radius: 1.6cqw; background: var(--paper); border: 1px solid var(--line-2); font: 500 1.9cqw/1.2 var(--sans); color: var(--navy); animation: rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: var(--d, 0s); }
+.scene .plan i { font: italic 400 2.6cqw/1 var(--serif); color: var(--coral); font-style: italic; }
+.scene .plan small { font: 400 1.5cqw/1 var(--sans); color: var(--navy-soft); padding: 0.7cqw 1.2cqw; border-radius: 99px; background: var(--cream); }
+.scene .appear { animation: rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: var(--d, 0s); }
+/* scene 4: a generic "new repository" page with NextClick guiding a paste and a click */
+.scene.s4 { padding: 0; background: #fbfbfd; }
+.scene .page { position: absolute; inset: 0; padding: 4.4cqw 5cqw; color: #1f2430; }
+.scene .page h4 { margin: 0; font: 600 3cqw/1.2 var(--sans); }
+.scene .page .lbl { margin-top: 2.6cqw; font: 600 1.6cqw/1 var(--sans); color: #3b4152; }
+.scene .page .field { position: relative; margin-top: 1cqw; width: 46%; height: 4.6cqw; border-radius: 1cqw; border: 1px solid #d8dbe4; background: #fff; display: flex; align-items: center; padding: 0 1.6cqw; font: 400 1.9cqw/1 var(--sans); }
+.scene .page .field.wide { width: 62%; }
+.scene .page .field .pasted { opacity: 0; animation: showIn 0.3s ease forwards; animation-delay: 2.3s; }
+@keyframes showIn { to { opacity: 1; } }
+.scene .page .radios { display: flex; gap: 3cqw; margin-top: 2.6cqw; font: 400 1.7cqw/1 var(--sans); color: #3b4152; }
+.scene .page .radios span::before { content: ""; display: inline-block; width: 1.5cqw; height: 1.5cqw; border-radius: 50%; border: 1px solid #b9bdc9; margin-right: 0.8cqw; vertical-align: -0.2cqw; }
+.scene .page .radios span:first-child::before { border: 0.5cqw solid #1f2430; }
+.scene .page .create { position: absolute; left: 5cqw; bottom: 5cqw; font: 600 1.8cqw/1 var(--sans); padding: 1.4cqw 2.2cqw; border-radius: 1cqw; background: #1f2430; color: #fff; }
+.scene .frame-a, .scene .frame-b { position: absolute; border-radius: 1.4cqw; outline: 0.4cqw solid var(--coral); box-shadow: 0 0 0 1.4cqw rgb(255 107 87 / 0.16); opacity: 0; }
+.scene .frame-a { left: calc(5cqw - 0.8cqw); top: calc(4.4cqw + 3cqw + 2.6cqw + 1.6cqw + 1cqw - 0.8cqw); width: calc(46% + 1.6cqw); height: calc(4.6cqw + 1.6cqw); animation: frameA 6.2s ease forwards; }
+@keyframes frameA { 4% { opacity: 1; } 50% { opacity: 1; } 56%, 100% { opacity: 0; } }
+.scene .frame-b { left: calc(5cqw - 0.8cqw); bottom: calc(5cqw - 0.8cqw); width: 19.5cqw; height: calc(4.6cqw + 1.6cqw); animation: frameB 6.2s ease forwards; }
+@keyframes frameB { 0%, 54% { opacity: 0; } 58% { opacity: 1; outline-color: var(--coral); } 88%, 100% { opacity: 1; outline-color: #2e6b45; box-shadow: 0 0 0 1.4cqw rgb(46 107 69 / 0.15); } }
+.scene .g-card { position: absolute; right: 3.6cqw; top: 7cqw; width: 38cqw; padding: 2.4cqw 2.4cqw 2.4cqw 2.9cqw; border-radius: 2.2cqw; background: #fff; border: 1px solid #e9e1d3; box-shadow: 0 2.4cqw 5cqw -2cqw rgb(20 33 61 / 0.35); overflow: hidden; }
+.scene .g-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 0.55cqw; background: var(--coral); }
+.scene .g-card .lab { font: 500 1.35cqw/1 ui-monospace, Consolas, monospace; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8478; }
+.scene .g-card .t { margin-top: 1.1cqw; font: 400 3cqw/1.1 var(--serif); color: var(--navy); }
+.scene .g-card .d { margin-top: 1cqw; font: 400 1.75cqw/1.45 var(--sans); color: #555b6b; }
+.scene .g-card .copy { display: flex; justify-content: space-between; align-items: center; margin-top: 1.4cqw; padding: 1cqw 1cqw 1cqw 1.6cqw; border-radius: 1.2cqw; background: #f3eee6; font: 500 1.7cqw/1 ui-monospace, Consolas, monospace; color: var(--navy); }
+.scene .g-card .copy span { font: 600 1.5cqw/1 var(--sans); padding: 0.9cqw 1.4cqw; border-radius: 0.9cqw; background: var(--navy); color: #fff; }
+.scene .g-card.c1 { animation: gc1 6.2s ease forwards; }
+.scene .g-card.c2 { opacity: 0; animation: gc2 6.2s ease forwards; }
+.scene .g-card.c3 { opacity: 0; animation: gc3 6.2s ease forwards; }
+.scene .g-card.c3::before { background: #2e6b45; }
+@keyframes gc1 { 0% { opacity: 0; transform: translateY(1.2cqw); } 6%, 50% { opacity: 1; transform: none; } 54%, 100% { opacity: 0; } }
+@keyframes gc2 { 0%, 53% { opacity: 0; transform: translateY(1.2cqw); } 58%, 84% { opacity: 1; transform: none; } 88%, 100% { opacity: 0; } }
+@keyframes gc3 { 0%, 87% { opacity: 0; transform: translateY(1.2cqw); } 92%, 100% { opacity: 1; transform: none; } }
+.scene .s4-cursor { position: absolute; z-index: 6; width: 3.2cqw; height: 3.2cqw; left: 70%; top: 88%; filter: drop-shadow(0 0.4cqw 0.6cqw rgb(20 33 61 / 0.35)); animation: s4cursor 6.2s cubic-bezier(0.45, 0, 0.2, 1) forwards; }
+@keyframes s4cursor {
+  0%, 10% { left: 70%; top: 88%; transform: scale(1); }
+  30% { left: 22%; top: 33%; transform: scale(1); }
+  33% { transform: scale(0.82); }
+  36%, 58% { left: 22%; top: 33%; transform: scale(1); }
+  76% { left: 14%; top: 84%; transform: scale(1); }
+  79% { transform: scale(0.82); }
+  82%, 100% { left: 14%; top: 84%; transform: scale(1); }
+}
+.scene .s4-dock { position: absolute; left: 50%; bottom: 2.4cqw; transform: translateX(-10%); display: flex; align-items: center; gap: 1cqw; padding: 0.9cqw 1.1cqw 0.9cqw 1.8cqw; border-radius: 2.2cqw; background: #fff; border: 1px solid #e9e1d3; box-shadow: 0 2cqw 4cqw -1.6cqw rgb(20 33 61 / 0.35); white-space: nowrap; font: 500 1.6cqw/1 var(--sans); color: var(--navy); }
+.scene .s4-dock .dd { width: 1.3cqw; height: 1.3cqw; border-radius: 50%; background: var(--coral); }
+.scene .s4-dock .go { font: 600 1.5cqw/1 var(--sans); padding: 1.1cqw 1.6cqw; border-radius: 1.1cqw; background: var(--coral); color: #fff; }
+@media (prefers-reduced-motion: reduce) {
+  .mock-cursor, .mock-ripple, .s4-cursor, .hero .nc-card.b, .hero .mock-sites .first .live { display: none; }
+  .scene .g-card.c2, .scene .g-card.c3 { display: none; }
+  .scene .g-card.c1, .scene .frame-a { opacity: 1; }
+  .scene .page .field .pasted { opacity: 1; }
+  .js-anim .reveal { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
@@ -267,7 +419,10 @@ footer a:hover { color: var(--navy); }
       <a href="#download">Early preview</a>
       <a href="#faq">FAQ</a>
     </div>
-    <a class="pill pill-navy pill-sm" href="https://deciduous-pen-256.notion.site/41c04589683f80e4a939f1d4d18c909d" target="_blank" rel="noopener" data-waitlist-link>Join the waitlist</a>
+    <div class="nav-cta">
+      <a class="pill pill-light pill-sm" href="https://github.com/Vamika-png/nextclick/releases/latest/download/NextClick-Setup-x64.exe" data-dl-auto>Download</a>
+      <a class="pill pill-navy pill-sm" href="https://deciduous-pen-256.notion.site/41c04589683f80e4a939f1d4d18c909d" target="_blank" rel="noopener" data-waitlist-link>Join the waitlist</a>
+    </div>
   </nav>
 </header>
 
@@ -278,19 +433,16 @@ footer a:hover { color: var(--navy); }
       <div class="star">✦</div>
     </div>
 
-    <a class="early" href="https://deciduous-pen-256.notion.site/41c04589683f80e4a939f1d4d18c909d" target="_blank" rel="noopener" style="text-decoration:none"><b>Early access</b> NextClick is in preview. Join the waitlist →</a>
-    <h1>From idea to launch,<em>one click <span class="accent">at a time.</span></em></h1>
-    <p class="lede">NextClick asks what you want to build, maps out the steps in the tools you choose, then points to exactly where to click, right on your screen. You make every click.</p>
-    <div class="cta">
-      <a class="pill pill-navy" href="https://deciduous-pen-256.notion.site/41c04589683f80e4a939f1d4d18c909d" target="_blank" rel="noopener" data-waitlist-link>Join the waitlist <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="early rise" style="--d:0s;text-decoration:none" href="https://deciduous-pen-256.notion.site/41c04589683f80e4a939f1d4d18c909d" target="_blank" rel="noopener"><b>Early access</b> Try the Windows preview today, or join the waitlist →</a>
+    <h1><span class="line rise" style="--d:.08s">From idea to launch,</span><em class="line rise" style="--d:.2s">one click <span class="accent">at a time.</span></em></h1>
+    <p class="lede rise" style="--d:.34s">NextClick asks what you want to build, maps out the steps in the tools you choose, then points to exactly where to click, right on your screen. You make every click.</p>
+    <div class="cta rise" style="--d:.46s">
+      <a class="pill pill-navy" href="https://github.com/Vamika-png/nextclick/releases/latest/download/NextClick-Setup-x64.exe" data-dl-auto><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg> Download for Windows</a>
+      <a class="pill pill-light" href="https://deciduous-pen-256.notion.site/41c04589683f80e4a939f1d4d18c909d" target="_blank" rel="noopener" data-waitlist-link>Join the waitlist <span class="arrow" aria-hidden="true">→</span></a>
     </div>
-    <p class="fine">Takes 10 seconds. Just your email.</p>
-    <div class="secondary-links">
-      <a href="#how"><span class="dot" aria-hidden="true">▶</span> See how it works</a>
-      <a href="#download">Try the early preview for Windows ↓</a>
-    </div>
+    <p class="fine rise" style="--d:.56s"><span>Free early preview</span> · <span class="dl-arch" data-dl-label>Windows 10 &amp; 11</span> · <span>about 120 MB</span> · <a href="#how" style="text-decoration:none;color:var(--navy-2)">See how it works ↓</a></p>
 
-    <div class="stage">
+    <div class="stage rise" style="--d:.7s">
       <svg class="threads" viewBox="0 0 1120 640" preserveAspectRatio="none" aria-hidden="true">
         <path d="M118 170 C 110 430, 300 600, 560 618 C 820 600, 1010 430, 1002 150" fill="none" stroke="#14213d" stroke-opacity="0.16" stroke-width="1"/>
         <path d="M150 470 C 260 300, 860 300, 970 440" fill="none" stroke="#ff6b57" stroke-opacity="0.22" stroke-width="1" stroke-dasharray="3 6"/>
@@ -300,8 +452,11 @@ footer a:hover { color: var(--navy); }
         <div class="mock-body" aria-hidden="true">
           <div class="mock-top"><b>Your sites</b><span class="mock-btn">Docs</span><span class="mock-btn solid target">Add new site</span></div>
           <div class="mock-empty">No sites yet. Import a project from GitHub to get started.</div>
-          <div class="mock-sites"><div></div><div></div><div></div></div>
-          <div class="nc-card"><div class="lab">Step 9 of 12 · Vercel</div><div class="t">Put your site online</div><div class="d">Click <b>Add new site</b>, then pick your chocolate-shop repo from GitHub.</div><div class="keys"><kbd>Ctrl+Alt+N</kbd> Show me <kbd>Ctrl+Alt+Enter</kbd> Done</div></div>
+          <div class="mock-sites"><div class="first"><div class="live">chocolate-shop<small>Live</small></div></div><div></div><div></div></div>
+          <div class="nc-card b ok"><div class="lab">Step 9 of 12 · checked ✓</div><div class="t">That worked.</div><div class="d">Your site shows as <b>Live</b>. Next: open it and test the order form.</div></div>
+          <span class="mock-ripple"></span>
+          <svg class="mock-cursor" viewBox="0 0 24 24"><path d="M5 2.5v17l4.6-4.3 3.1 7 3.2-1.4-3.1-6.9 6.3-.4L5 2.5z" fill="#14213d" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          <div class="nc-card a"><div class="lab">Step 9 of 12 · Vercel</div><div class="t">Put your site online</div><div class="d">Click <b>Add new site</b>, then pick your chocolate-shop repo from GitHub.</div><div class="keys"><kbd>Ctrl+Alt+N</kbd> Show me <kbd>Ctrl+Alt+Enter</kbd> Done</div></div>
           <div class="nc-dock"><span class="dd"></span><span class="st">STEP 9 OF 12<b>Put your site online</b></span><span class="go">Show me</span><span class="done">Done</span><span class="ic">?</span><span class="ic">‹</span><span class="ic">›</span><span class="ic">✕</span></div>
         </div>
       </div>
@@ -319,49 +474,73 @@ footer a:hover { color: var(--navy); }
     </div>
   </div>
 
+  <div class="wrap"><div class="marquee" aria-label="Works with 133 founder tools, including these">
+    <span class="label">Works with</span>
+    <div class="viewport"><div class="track" aria-hidden="true"><span>ChatGPT</span><span>Claude</span><span>Claude Code</span><span>Cursor</span><span>GitHub</span><span>Lovable</span><span>Bolt.new</span><span>Figma</span><span>Canva</span><span>Framer</span><span>Supabase</span><span>Vercel</span><span>Razorpay</span><span>Stripe</span><span>Notion</span><span>HubSpot</span><span>Zapier</span><span>n8n</span><span>Mailchimp</span><span>Google Sheets</span><span>Webflow</span><span>Product Hunt</span><span>PostHog</span><span>Typeform</span><span>Perplexity</span><span>CapCut</span><span>Calendly</span><span>Intercom</span><span>ChatGPT</span><span>Claude</span><span>Claude Code</span><span>Cursor</span><span>GitHub</span><span>Lovable</span><span>Bolt.new</span><span>Figma</span><span>Canva</span><span>Framer</span><span>Supabase</span><span>Vercel</span><span>Razorpay</span><span>Stripe</span><span>Notion</span><span>HubSpot</span><span>Zapier</span><span>n8n</span><span>Mailchimp</span><span>Google Sheets</span><span>Webflow</span><span>Product Hunt</span><span>PostHog</span><span>Typeform</span><span>Perplexity</span><span>CapCut</span><span>Calendly</span><span>Intercom</span></div></div>
+  </div></div>
+
   <section id="how" class="wrap">
     <div class="head">
       <div class="eyebrow">How it works</div>
       <h2>Four steps from <em>“I want to…”</em> to done.</h2>
-      <p>NextClick works like a patient friend sitting next to you. It plans, it points, it checks. It never takes the mouse.</p>
+      <p>NextClick works like a patient friend sitting next to you. It plans, it points, it checks. It never takes the mouse. Watch it, or pick a step.</p>
     </div>
-    <div class="steps">
-      <div class="step has-shot">
-        <div class="copy">
-          <div class="num">01</div>
-          <h3>Tell NextClick your goal.</h3>
-          <p>Type what you want in plain words. A website, a payment page, a launch, a budget. No jargon needed.</p>
-          <div class="quote">“I want to build a website for my chocolate business and take orders online.”</div>
-          <div class="num" style="margin-top:34px">02</div>
-          <h3>Answer a couple of questions.</h3>
-          <p>Which tools you want to use and what you already have: Lovable, Bolt, Claude with GitHub, Cursor, or let NextClick recommend one.</p>
-        </div>
-        <div class="frame"><img src="assets/app-questions.jpg" width="999" height="810" alt="NextClick asking which tool you would like to use, with options Lovable, Bolt.new, Framer, Claude + GitHub, Cursor and Not sure" loading="lazy"></div>
+    <div class="how-grid">
+      <div class="how-steps" role="tablist" aria-label="How NextClick works">
+        <button class="how-step active" role="tab" aria-selected="true" data-step="0" style="--dur:7s"><span class="n">01</span><span class="t">Tell NextClick your goal</span><span class="p">Type what you want in plain words: a website, a payment page, a launch. No jargon needed.</span><span class="bar"><i></i></span></button>
+        <button class="how-step" role="tab" aria-selected="false" data-step="1" style="--dur:7s"><span class="n">02</span><span class="t">Pick your tools</span><span class="p">It asks before it plans: Lovable, Bolt, Claude with GitHub, Cursor, or “recommend one”. Then what you already have.</span><span class="bar"><i></i></span></button>
+        <button class="how-step" role="tab" aria-selected="false" data-step="2" style="--dur:7s"><span class="n">03</span><span class="t">Get your plan</span><span class="p">Small steps in the tools you chose, with the exact prompts and text to paste, ending with your project live.</span><span class="bar"><i></i></span></button>
+        <button class="how-step" role="tab" aria-selected="false" data-step="3" style="--dur:8s"><span class="n">04</span><span class="t">Follow it on your screen</span><span class="p">It frames the exact box or button, gives you the text to paste, and checks each step really worked. You make every click.</span><span class="bar"><i></i></span></button>
       </div>
-      <div class="step has-shot flip">
-        <div class="copy">
-          <div class="num">03</div>
-          <h3>Get your plan.</h3>
-          <p>Milestones and small steps in the tools you chose, with the exact prompts and formulas to paste.</p>
-          <ul class="planlist" aria-label="Example plan">
-            <li><b>Plan your pages</b><small>Claude</small></li>
-            <li><b>Build the home page</b><small>Claude Code</small></li>
-            <li><b>Save it to GitHub</b><small>GitHub</small></li>
-            <li><b>Put your site online</b><small>Vercel</small></li>
-          </ul>
-          <div class="num" style="margin-top:34px">04</div>
-          <h3>Follow it on your screen.</h3>
-          <p>Press <b>Show me</b>. NextClick frames the button to click and gives you the text to paste. Click it yourself, press <b>Done</b>, and it checks the step worked before moving on.</p>
-        </div>
-        <div class="frame" style="border:0;box-shadow:none;background:none"><div class="mock" role="img" aria-label="Illustration: NextClick confirms the step worked and your site is live">
-          <div class="mock-bar" aria-hidden="true"><i></i><i></i><i></i><span class="url">your hosting dashboard</span></div>
+      <div class="how-screen">
+        <div class="mock" role="img" aria-label="Animated illustration of the current step">
+          <div class="mock-bar" aria-hidden="true"><i></i><i></i><i></i><span class="url" data-scene-url>NextClick</span></div>
           <div class="mock-body" aria-hidden="true">
-            <div class="mock-top"><b>Your sites</b><span class="mock-btn">Docs</span><span class="mock-btn solid">Add new site</span></div>
-            <div class="mock-sites"><div class="live">chocolate-shop<small>Live</small></div><div></div><div></div></div>
-            <div class="nc-card ok"><div class="lab">Step 9 of 12 · checked ✓</div><div class="t">That worked.</div><div class="d">Your site shows as <b>Live</b>. Next: open it in your browser and test the order form.</div></div>
-            <div class="nc-dock"><span class="dd" style="background:#2e6b45"></span><span class="st">STEP 10 OF 12<b>Test your live site</b></span><span class="go">Show me</span><span class="done">Done</span><span class="ic">?</span><span class="ic">‹</span><span class="ic">›</span><span class="ic">✕</span></div>
+            <div class="scene s1" data-scene="0">
+              <div class="s-brand"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 5.5v19l5.2-4.8 3.5 7.9 3.6-1.6-3.5-7.8 7.1-.4L8 5.5z" fill="#14213d"/><circle cx="25" cy="7" r="4.2" fill="#ff6b57"/></svg> NextClick</div>
+              <div class="s-h">What do you want to do?</div>
+              <div class="s-sub">Say it in your own words.</div>
+              <div class="s-input"><span class="typed" data-typed="I want to build a website for my chocolate shop and take orders online."></span><div class="s-row"><span>Press Enter</span><span class="s-btn go-pulse" style="--d:5.4s">Next →</span></div></div>
+              <div class="ideas"><span>Build my first web app</span><span>Connect Claude to GitHub</span><span>Take payments</span></div>
+            </div>
+            <div class="scene s2" data-scene="1">
+              <div class="s-h" style="margin-top:0;font-size:4.6cqw">A few questions before I plan</div>
+              <div class="s-sub">You want to build a website for your chocolate shop.</div>
+              <div class="q" style="--d:.2s"><b>Which tool would you like to use?</b><div class="chips"><span>Lovable</span><span>Bolt.new</span><span class="pick" style="--d:1.6s">Claude + GitHub</span><span>Cursor</span><span>Not sure, recommend one</span></div></div>
+              <div class="q" style="--d:2.2s"><b>What do you already have?</b><div class="chips"><span>Nothing yet</span><span class="pick" style="--d:3.4s">Product photos</span><span class="pick" style="--d:3.9s">Brand colours</span><span>A domain</span></div></div>
+              <div class="s-row appear" style="--d:4.6s;justify-content:flex-end;margin-top:2.4cqw"><span class="s-btn go-pulse" style="--d:5.4s">Create my plan</span></div>
+            </div>
+            <div class="scene s3" data-scene="2">
+              <div class="s-sub" style="margin-top:0">Your plan · 5 milestones · 12 steps</div>
+              <div class="s-h" style="margin-top:1cqw;font-size:4.4cqw">Build ChocoShop with <i style="font-style:italic">Claude and GitHub</i></div>
+              <div class="plan">
+                <div style="--d:.5s"><i>1</i>Plan your pages<small>Claude</small></div>
+                <div style="--d:1s"><i>2</i>Build the home page<small>Claude Code</small></div>
+                <div style="--d:1.5s"><i>3</i>Save it to GitHub<small>GitHub</small></div>
+                <div style="--d:2s"><i>4</i>Put your site online<small>Vercel</small></div>
+                <div style="--d:2.5s"><i>5</i>Test the live site<small>Your browser</small></div>
+              </div>
+              <div class="s-row appear" style="--d:3.4s;justify-content:flex-end;margin-top:2.4cqw"><span class="s-btn go-pulse" style="--d:4.6s;background:var(--coral)">Start step 1 on my screen →</span></div>
+            </div>
+            <div class="scene s4" data-scene="3">
+              <div class="page">
+                <h4>Create a new repository</h4>
+                <div class="lbl">Repository name</div>
+                <div class="field"><span class="pasted">chocolate-shop</span></div>
+                <div class="lbl">Description (optional)</div>
+                <div class="field wide"></div>
+                <div class="radios"><span>Public</span><span>Private</span></div>
+                <div class="create">Create repository</div>
+              </div>
+              <div class="frame-a"></div><div class="frame-b"></div>
+              <div class="g-card c1"><div class="lab">Step 3 of 12 · GitHub</div><div class="t">Name your repository</div><div class="d">Click the <b>Repository name</b> box and paste this:</div><div class="copy">chocolate-shop<span>Copy</span></div></div>
+              <div class="g-card c2"><div class="lab">Step 3 of 12 · GitHub</div><div class="t">Now create it</div><div class="d">Click <b>Create repository</b> at the bottom.</div></div>
+              <div class="g-card c3"><div class="lab">Step 3 of 12 · checked ✓</div><div class="t">That worked.</div><div class="d">Your repository <b>chocolate-shop</b> exists. Next: build the home page.</div></div>
+              <div class="s4-dock"><span class="dd"></span>Name your repository<span class="go">Show me</span></div>
+              <svg class="s4-cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2.5v17l4.6-4.3 3.1 7 3.2-1.4-3.1-6.9 6.3-.4L5 2.5z" fill="#14213d" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            </div>
           </div>
-        </div></div>
+        </div>
       </div>
     </div>
   </section>
@@ -481,6 +660,57 @@ footer a:hover { color: var(--navy); }
     arm64: 'https://github.com/Vamika-png/nextclick/releases/latest/download/NextClick-Setup-arm64.exe'
   }
   for (const a of document.querySelectorAll('[data-dl]')) a.href = DOWNLOADS[a.dataset.dl]
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  // How it works: play each step's scene, then move on (click a step to jump to it).
+  const steps = [...document.querySelectorAll('.how-step')]
+  const scenes = [...document.querySelectorAll('.scene')]
+  const urlLabel = document.querySelector('[data-scene-url]')
+  const URLS = ['NextClick', 'NextClick · questions', 'NextClick · your plan', 'a new repository page, with NextClick guiding']
+  let typer = null
+  function show(i) {
+    steps.forEach((b, k) => { b.classList.toggle('active', k === i); b.setAttribute('aria-selected', String(k === i)); const bar = b.querySelector('.bar i'); bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '' })
+    scenes.forEach((sc, k) => { sc.classList.remove('play'); if (k === i) { void sc.offsetWidth; sc.classList.add('play') } })
+    // restart every animation inside the scene
+    scenes[i].querySelectorAll('*').forEach((el) => { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '' })
+    if (urlLabel) urlLabel.textContent = URLS[i]
+    const t = scenes[i].querySelector('[data-typed]')
+    clearInterval(typer)
+    if (t) {
+      const full = t.dataset.typed
+      if (reduced) { t.textContent = full; return }
+      let n = 0
+      t.innerHTML = '<span class="caret"></span>'
+      setTimeout(() => {
+        typer = setInterval(() => {
+          n++
+          t.innerHTML = full.slice(0, n).replace(/&/g, '&amp;').replace(/</g, '&lt;') + '<span class="caret"></span>'
+          if (n >= full.length) clearInterval(typer)
+        }, 55)
+      }, 500)
+    }
+  }
+  steps.forEach((b, i) => {
+    b.addEventListener('click', () => show(i))
+    b.querySelector('.bar i').addEventListener('animationend', () => { if (b.classList.contains('active')) show((i + 1) % steps.length) })
+  })
+  if (steps.length) show(0)
+
+  // Gentle reveal of sections as they scroll into view.
+  if (!reduced && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('js-anim')
+    const groups = ['.head', '.how-grid', '.stages > div', '.control > div', '.download', '.waitlist-band', '.faq', '.marquee']
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) }
+    }, { rootMargin: '0px 0px -8% 0px' })
+    for (const sel of groups) document.querySelectorAll(sel).forEach((el, k) => {
+      if (el.closest('.hero')) return
+      el.classList.add('reveal')
+      if (sel.includes('>')) el.style.setProperty('--i', (k % 4) * 0.07 + 's')
+      io.observe(el)
+    })
+    setTimeout(() => document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in')), 6000) // never leave anything hidden
+  }
 
   // Highlight the right installer for this computer (Chromium browsers can tell ARM from x64).
   async function detectArch() {
@@ -497,6 +727,10 @@ footer a:hover { color: var(--navy); }
   detectArch().then((arch) => {
     if (!arch) return
     document.querySelector(`.dl[data-arch="${arch}"]`)?.classList.add('rec')
+    for (const a of document.querySelectorAll('[data-dl-auto]')) a.href = DOWNLOADS[arch]
+    const label = document.querySelector('[data-dl-label]')
+    if (label) label.textContent = arch === 'arm64' ? 'for your ARM PC' : 'Windows 10 & 11'
+
   })
 </script>
 </body>
