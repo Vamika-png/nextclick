@@ -161,13 +161,15 @@ header { position: relative; z-index: 5; }
 .secondary-links a:hover { color: var(--navy); }
 .secondary-links .dot { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--navy); color: var(--cream); font-size: 8px; }
 
-.waitlist-band { margin-top: 0; padding: 80px 28px; border-radius: 36px; background: var(--navy); color: var(--cream); text-align: center; position: relative; overflow: hidden; }
+.waitlist-band { margin-top: 0; padding: 80px 28px; border-radius: 36px; background: var(--paper); border: 1px solid var(--line); color: var(--navy); text-align: center; position: relative; overflow: hidden; }
+.waitlist-band::before { content: ""; position: absolute; width: 620px; height: 620px; border-radius: 50%; left: 50%; top: -360px; transform: translateX(-50%); background: radial-gradient(circle, rgb(255 107 87 / 0.18), transparent 68%); pointer-events: none; }
+.waitlist-band > * { position: relative; }
 .waitlist-band::after { content: "✦"; position: absolute; right: 8%; top: 18%; color: var(--coral); font-size: 28px; }
-.waitlist-band .eyebrow { color: var(--coral); }
+.waitlist-band .eyebrow { color: var(--coral-ink); }
 .waitlist-band h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(40px, 5.4vw, 68px); line-height: 1.02; letter-spacing: -0.02em; margin-top: 12px; }
 .waitlist-band h2 em { font-style: italic; }
-.waitlist-band p.sub { margin: 16px auto 0; max-width: 520px; color: rgb(247 241 230 / 0.72); font-size: 17px; }
-.waitlist-band .fine { color: rgb(247 241 230 / 0.6); }
+.waitlist-band p.sub { margin: 16px auto 0; max-width: 520px; color: var(--navy-soft); font-size: 17px; }
+.waitlist-band .fine { color: var(--navy-soft); }
 .preview-note { max-width: 640px; margin: 14px auto 0; padding: 12px 16px; border-radius: 14px; background: var(--coral-soft); color: #8a3426; font-size: 14px; }
 
 /* sections */
@@ -195,14 +197,16 @@ section { padding-block: 120px 0; scroll-margin-top: 20px; }
 .planlist small { margin-left: auto; color: var(--navy-soft); font-size: 12px; white-space: nowrap; }
 
 /* tools */
-.tools-band { margin: 120px auto 0; width: calc(100% - 24px); max-width: 1400px; background: var(--navy); color: var(--cream); border-radius: 36px; padding-block: 96px; }
-.tools-band .head p { color: rgb(247 241 230 / 0.72); }
-.tools-band .eyebrow { color: var(--coral); }
-.stages { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1px; margin-top: 56px; background: rgb(247 241 230 / 0.12); border-radius: 20px; overflow: hidden; }
-.stages > div { background: var(--navy); padding: 22px 22px 24px; }
-.stages .n { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--coral); }
-.stages h3 { font: 600 15px/1.3 var(--sans); margin-top: 4px; }
-.stages p { margin-top: 8px; font-size: 13.5px; color: rgb(247 241 230 / 0.66); line-height: 1.5; }
+.tools-band { margin: 120px auto 0; width: calc(100% - 24px); max-width: 1400px; background: var(--cream-2); color: var(--navy); border-radius: 36px; padding-block: 96px; position: relative; overflow: hidden; }
+.tools-band::before { content: ""; position: absolute; width: 560px; height: 560px; border-radius: 50%; left: -200px; bottom: -300px; background: radial-gradient(circle, rgb(255 107 87 / 0.14), transparent 70%); pointer-events: none; }
+.tools-band .wrap { position: relative; }
+.tools-band .head p { color: var(--navy-soft); }
+.stages { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-top: 56px; }
+.stages > div { background: var(--paper); border: 1px solid var(--line-2); border-radius: 18px; padding: 22px 22px 24px; transition: transform 160ms, box-shadow 160ms, border-color 160ms; }
+.stages > div:hover { transform: translateY(-2px); border-color: rgb(255 107 87 / 0.35); box-shadow: 0 14px 28px -18px rgb(20 33 61 / 0.35); }
+.stages .n { font-family: var(--serif); font-style: italic; font-size: 24px; line-height: 1; color: var(--coral); }
+.stages h3 { font: 600 15px/1.3 var(--sans); margin-top: 10px; color: var(--navy); }
+.stages p { margin-top: 8px; font-size: 13.5px; color: var(--navy-soft); line-height: 1.5; }
 
 /* control */
 .control { display: grid; gap: 16px; margin-top: 56px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
@@ -440,7 +444,7 @@ footer a:hover { color: var(--navy); }
       <h2>Be first to get <em>NextClick.</em></h2>
       <p class="sub">We’re opening NextClick to founders in small groups. Leave your email and we’ll let you in as soon as there’s room.</p>
       <div class="cta" style="margin-top:34px">
-        <a class="pill pill-navy" href="https://deciduous-pen-256.notion.site/41c04589683f80e4a939f1d4d18c909d" target="_blank" rel="noopener" data-waitlist-link style="background:var(--coral)">Join the waitlist <span class="arrow" aria-hidden="true" style="background:var(--navy)">→</span></a>
+        <a class="pill pill-navy" href="https://deciduous-pen-256.notion.site/41c04589683f80e4a939f1d4d18c909d" target="_blank" rel="noopener" data-waitlist-link>Join the waitlist <span class="arrow" aria-hidden="true">→</span></a>
       </div>
       <p class="fine">We only use your email to tell you about NextClick. Unsubscribe any time.</p>
     </div>
